@@ -69,6 +69,10 @@ LOCAL_CFLAGS+= -O2 -std=gnu99 -D UNIFIED_DEBUG_MESSAGES \
 	-D _REVERB_ENABLED
 
 # not using these options
+# -D _IMELODY_PARSER
+# -D _RTTTL_PARSER
+# -D _OTA_PARSER
+# -D _XMF_PARSER
 # -D _WAVE_PARSER
 # -D _IMA_DECODER (needed for IMA-ADPCM wave files)
 # -D _CHORUS_ENABLED
@@ -118,6 +122,8 @@ LOCAL_MODULE := libsonivox
 
 # LOCAL_SHARED_LIBRARIES := \
 # 	libutils libcutils
+
+LOCAL_LDLIBS := -llog
 
 include $(BUILD_SHARED_LIBRARY)
 
