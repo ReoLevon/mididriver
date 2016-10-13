@@ -92,33 +92,33 @@ LOCAL_MODULE := libsonivox
 # 	host_src/eas_reverb.h \
 # 	host_src/jet.h
 
-# ifeq ($(TARGET_ARCH),arm)
-# LOCAL_SRC_FILES+= \
-# 	lib_src/ARM-E_filter_gnu.s \
-# 	lib_src/ARM-E_interpolate_loop_gnu.s \
-# 	lib_src/ARM-E_interpolate_noloop_gnu.s \
-# 	lib_src/ARM-E_mastergain_gnu.s \
-# 	lib_src/ARM-E_voice_gain_gnu.s
+ifeq ($(TARGET_ARCH),arm)
+LOCAL_SRC_FILES+= \
+	lib_src/ARM-E_filter_gnu.s \
+	lib_src/ARM-E_interpolate_loop_gnu.s \
+	lib_src/ARM-E_interpolate_noloop_gnu.s \
+	lib_src/ARM-E_mastergain_gnu.s \
+	lib_src/ARM-E_voice_gain_gnu.s
 
-# asm_flags := \
-# 	-I $(LOCAL_PATH)/lib_src \
-# 	--defsym SAMPLE_RATE_22050=1 \
-# 	--defsym STEREO_OUTPUT=1 \
-# 	--defsym FILTER_ENABLED=1 \
-# 	--defsym SAMPLES_8_BIT=1
+asm_flags := \
+	-I $(LOCAL_PATH)/lib_src \
+	--defsym SAMPLE_RATE_22050=1 \
+	--defsym STEREO_OUTPUT=1 \
+	--defsym FILTER_ENABLED=1 \
+	--defsym SAMPLES_8_BIT=1
 
-# LOCAL_ASFLAGS := \
-# 	$(foreach f,$(asm_flags),-Wa,"$(f)")
+LOCAL_CFLAGS += \
+	$(foreach f,$(asm_flags),-Wa,"$(f)")
 
 # .s files not ported for Clang assembler yet.
-# LOCAL_CLANG_ASFLAGS += -no-integrated-as
+LOCAL_CLANG_ASFLAGS += -no-integrated-as
 
-# asm_flags :=
+asm_flags :=
 
-# LOCAL_CFLAGS += -D NATIVE_EAS_KERNEL
+LOCAL_CFLAGS += -D NATIVE_EAS_KERNEL
 
 # LOCAL_COPY_HEADERS += lib_src/ARM_synth_constants_gnu.inc
-# endif
+endif
 
 # LOCAL_SHARED_LIBRARIES := \
 # 	libutils libcutils
