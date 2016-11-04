@@ -3,7 +3,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle-experimental:0.3.0-alpha7'
+        classpath 'com.android.tools.build:gradle-experimental:0.8.0'
     }
 }
 
@@ -12,46 +12,46 @@ apply plugin: 'com.android.model.library'
 model {
     android {
         compileSdkVersion = 22
-        buildToolsVersion = "23.0.2"
+        buildToolsVersion = "24.0.2"
 
         defaultConfig.with {
             minSdkVersion.apiLevel = 15
             targetSdkVersion.apiLevel = 22
         }
     }
-    compileOptions.with {
-        sourceCompatibility = JavaVersion.VERSION_1_7
-        targetCompatibility = JavaVersion.VERSION_1_7
+
+    android.compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
     }
-    android.ndk {
-        moduleName = "midi"
-        ldLibs = ['android', 'log', 'OpenSLES']
+    android.externalNativeBuild {
+    	ndkBuild {
+       	    path "src/main/jni/Android.mk"
+      	}
     }
     android.buildTypes {
         release {
             minifyEnabled = false
-            proguardFiles += file('proguard-rules.txt')
+            proguardFiles.add(file('proguard-rules.txt'))
         }
     }
     android.productFlavors {
         create("arm") {
-            ndk.abiFilters += "armeabi"
+            ndk.abiFilters.add("armeabi")
         }
         create("arm7") {
-            ndk.abiFilters += "armeabi-v7a"
+            ndk.abiFilters.add("armeabi-v7a")
+            ndk.abiFilters.add("arm64-v8a")
         }
         create("x86") {
-            ndk.abiFilters += "x86"
+            ndk.abiFilters.add("x86")
+            ndk.abiFilters.add("x86_64")
         }
         create("mips") {
-            ndk.abiFilters += "mips"
+            ndk.abiFilters.add("mips")
+            ndk.abiFilters.add("mips64")
         }
-        // To include all except 64 bit cpu architectures
         create("all") {
-            ndk.abiFilters += "armeabi"
-            ndk.abiFilters += "armeabi-v7a"
-            ndk.abiFilters += "x86"
-            ndk.abiFilters += "mips"
 	}
     }
 }

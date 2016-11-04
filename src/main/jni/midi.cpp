@@ -478,8 +478,6 @@ jboolean
 Java_org_billthefarmer_mididriver_MidiDriver_shutdown(JNIEnv *env,
 						      jobject obj)
 {
-    EAS_RESULT result;
-
     shutdownAudio();
 
     if (buffer != NULL)
